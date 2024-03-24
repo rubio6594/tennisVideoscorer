@@ -1,0 +1,6 @@
+<div class="navbar">
+    <div class="open-match" (click)="openMatch()">Match</div>
+    <div class="open-settings" (click)="openSettings()">Setting</div>
+</div>
+<app-console-match *ngIf="showMatch" ></app-console-match>
+<app-settings *ngIf="!showMatch" ></app-settings>

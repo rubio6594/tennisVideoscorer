@@ -1,0 +1,43 @@
+<div class="screen-component grid grid-rows-12 grid-cols-1" [style.background-image]="'url(' + screenSignal!().background + ')'" [style.color]="screenSignal!().color">
+    <div class="header row-span-2">
+        <div> {{screenSignal!().title}} </div>
+    </div>
+    <div class="scorer row-span-8">
+        <div class="video" *ngIf="showVideo">
+            <video autoplay muted (ended)="endVideo()" id="myVideo">
+                <source [src]="screenSignal!().video"  type="video/mp4">
+            </video>
+        </div>
+        <div class="grid grid-flow-col grid-rows-2 grid-cols-12">
+            <div class="col-span-5">
+                Jugador1
+            </div>
+            <div class="col-span-5">
+                Jugador 2
+            </div>
+            <ng-container *ngFor="let set of matchSignal!().sets">
+                <div>
+                    {{set.games1}}
+                </div>
+                <div>
+                    {{set.games2}}
+                </div>
+            </ng-container>
+            <div>
+                {{matchSignal!().points1}}
+            </div>
+            <div>
+                {{matchSignal!().points2}}
+            </div>
+        </div>
+    </div>
+    <div class="footer row-span-2">
+        <div class="sliders" *ngIf="screenSignal && screenSignal().bottomBanner.length > 0">
+           s @for (banner of screenSignal().bottomBanner; track banner) {
+                <div class="slider" *ngIf="current == i">
+                    <img class="img footer-img" [src]="banner">
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="settings grid grid-rows-4 grid-cols-1">
+    <div class="row-span-1">
+        <div style="height: fit-content; overflow: hidden;">
+            <app-screen></app-screen>
+        </div>
+    </div>
+    <div class="row-span-3">
+        <div class="title-input">
+            <mat-form-field class="">
+                <mat-label>Titulo</mat-label>
+                <input matInput [(ngModel)]='screen!.title' [value]="screen!.title">
+            </mat-form-field>  
+        </div>
+        <div class="color-input">
+            <mat-form-field class="">
+                <mat-label>Color</mat-label>
+                <input matInput [(ngModel)]='screen!.color' [value]="screen!.color" type="color">
+            </mat-form-field>  
+        </div>
+        <div (click)="openBackgroundPicker()">
+            Select Background
+        </div>
+        <div (click)="updateBanners()">
+            Select Banner
+        </div>
+        <div (click)="openVideoPicker()">
+            Select Video
+        </div>
+        <div class="save" (click)="saveScreen()">
+            Save
+        </div>
+    </div>
+</div>
+
+<ng-container *ngIf="showBackgroundPicker">
+    <app-image-picker (selectedImage)="selectBackground($event)" [type]="'background'"></app-image-picker>
+</ng-container>
+
+<ng-container *ngIf="showVideoPicker">
+    <app-image-picker (selectedImage)="selectVideo($event)" [type]="'video'"></app-image-picker>
+</ng-container>

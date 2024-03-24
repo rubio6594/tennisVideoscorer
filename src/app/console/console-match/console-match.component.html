@@ -1,0 +1,39 @@
+<div class="grid grid-cols-12">
+    <div class="col-span-3">
+        <app-console-player></app-console-player>
+        <div (click)="updatePoints(1, 2, true)">
+            Add point 1
+        </div>
+    </div>
+    <div class="col-span-6">
+        <div style="height: fit-content; overflow: hidden;">
+            <app-screen></app-screen>
+        </div>
+
+        <mat-checkbox>Punto de oro</mat-checkbox>
+        <div>
+            <div>Tiempo de partido</div>
+            <input type="time">
+        </div>
+        <div>
+            <div>Video</div>
+            <mat-select>
+                <mat-option>Test</mat-option>
+            </mat-select>
+        </div>
+        <div>
+            <div>
+                Mensaje
+            </div>
+            <textarea>
+                
+            </textarea>
+        </div>
+    </div>
+    <div class="col-span-3">
+        <app-console-player></app-console-player>
+        <div (click)="updatePoints(2, 1, true)">
+            Add point 2
+        </div>
+    </div>
+</div>

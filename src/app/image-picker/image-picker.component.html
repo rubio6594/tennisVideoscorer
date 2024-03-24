@@ -1,0 +1,22 @@
+<div>
+    <div class="card">
+      <div class="form-group">
+        <label for="search-text">Search Text</label>
+        <input type="email" class="form-control" id="search-text" aria-describedby="search-text" 
+          [(ngModel)]="searchText" placeholder="Enter text to search" 
+          autofocus>
+      </div>
+      <ul *ngIf="type !== 'video'" class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let image of images() | appFilter: searchText">
+            <img [src]="image" (click)="selectImage(image)">
+        </li>
+      </ul>
+      <ul *ngIf="type == 'video'" class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let image of images() | appFilter: searchText">
+            <video (click)="selectImage(image)" muted id="myVideo">
+                <source [src]="image + '#t=0.1'"  type="video/mp4">
+            </video>
+        </li>
+      </ul>
+    </div>
+  </div>
