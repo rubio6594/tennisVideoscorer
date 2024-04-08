@@ -1,39 +1,55 @@
 <div class="grid grid-cols-12">
     <div class="col-span-3">
-        <app-console-player></app-console-player>
-        <div (click)="updatePoints(1, 2, true)">
-            Add point 1
-        </div>
+        <app-console-player [myPlayerNumber]="1" [otherPlayerNumber]="2"></app-console-player>
     </div>
     <div class="col-span-6">
-        <div style="height: fit-content; overflow: hidden;">
-            <app-screen></app-screen>
-        </div>
-
-        <mat-checkbox>Punto de oro</mat-checkbox>
         <div>
-            <div>Tiempo de partido</div>
-            <input type="time">
+            <app-screen style="height: 500px; display: block;" [enableFullScreen]="false"></app-screen>
         </div>
-        <div>
-            <div>Video</div>
-            <mat-select>
-                <mat-option>Test</mat-option>
-            </mat-select>
-        </div>
-        <div>
-            <div>
-                Mensaje
+        <div class="mt-8 grid grid-cols-2 gap-6 justify-items-center">
+            <div class="">
+                <mat-checkbox class="w-2/4" [(ngModel)]="match!.sets3"
+                        (ngModelChange)="saveMatch()" [color]="'primary'">
+                         3 sets
+                </mat-checkbox>
+                <mat-checkbox class="w-2/4" [(ngModel)]="match!.supertiebreak"
+                    (ngModelChange)="saveMatch()" [color]="'primary'">
+                    Supertiebreak
+                </mat-checkbox>
+            </div> 
+            <div class="button" (click)="newMatch()">
+                Nuevo partido
             </div>
-            <textarea>
-                
-            </textarea>
+            <div class="button" (click)="updateShowTotalSets()">
+                Mostrar/Ocultar sets totales
+            </div>
+            <div class="button" (click)="controlTime(true)">
+                Empezar tiempo
+            </div>
+            <div class="button" (click)="controlTime(false)">
+                Parar tiempo
+            </div>
+            <div class="button" (click)="showPresentation()">
+                Mostrar/Ocultar presentacion
+            </div>
+            <div class="button" (click)="controlServeTime()">
+                Mostrar/Ocultar tiempo de saque
+            </div>
+            <div class="round-input">
+                <mat-form-field class="">
+                    <mat-label>Ronda</mat-label>
+                    <input matInput [(ngModel)]='match!.round' [value]="match!.round">
+                </mat-form-field>  
+                <div class="save" (click)="saveMatch()">
+                    Guardar
+                </div>
+            </div> 
+            <div class="button" (click)="showAce()">
+                Ace
+            </div>  
         </div>
     </div>
     <div class="col-span-3">
-        <app-console-player></app-console-player>
-        <div (click)="updatePoints(2, 1, true)">
-            Add point 2
-        </div>
+        <app-console-player [myPlayerNumber]="2" [otherPlayerNumber]="1"></app-console-player>
     </div>
 </div>

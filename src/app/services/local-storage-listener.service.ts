@@ -32,8 +32,8 @@ export class LocalStorageListenerService {
             this.screenService.updateBackgrounds();
             localStorage.removeItem("update");
             break;
-          case "playersUpdated":
-            this.matchService.updatePlayers();
+          case "playersImgUpdated":
+            this.matchService.updatePlayersImg();
             localStorage.removeItem("update");
             break;
         }

@@ -8,6 +8,10 @@ export interface Screen {
     color: string,
     video: string,
     bottomBanner: string[],
+    showBanner: boolean,
     bannerTime: number,
-    message: string
+    message: string,
+    showPresentation: boolean,
+    showMessage: boolean,
+    messageFullScreen: boolean
 }

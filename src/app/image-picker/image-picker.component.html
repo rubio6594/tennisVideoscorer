@@ -1,22 +1,35 @@
-<div>
+<div class="image-picker">
     <div class="card">
-      <div class="form-group">
-        <label for="search-text">Search Text</label>
-        <input type="email" class="form-control" id="search-text" aria-describedby="search-text" 
-          [(ngModel)]="searchText" placeholder="Enter text to search" 
-          autofocus>
+      <div class="flex mb-8 items-center justify-end">
+        <div class="form-group mr-4">
+          <label class="mr-2" for="search-text">Buscar</label>
+          <input type="text" class="form-control" id="search-text" aria-describedby="search-text" 
+            [(ngModel)]="searchText" placeholder="Buscar imagen" 
+            autofocus>
+        </div>
+  
+        <div class="button blank mr-4" (click)="selectImage('')">
+          Sin imagen
+        </div>
+        <div class="button close" (click)="onClose()">
+          Cerrar
+        </div>
       </div>
-      <ul *ngIf="type !== 'video'" class="list-group list-group-flush">
-        <li class="list-group-item" *ngFor="let image of images() | appFilter: searchText">
-            <img [src]="image" (click)="selectImage(image)">
-        </li>
-      </ul>
-      <ul *ngIf="type == 'video'" class="list-group list-group-flush">
-        <li class="list-group-item" *ngFor="let image of images() | appFilter: searchText">
+      <div *ngIf="type !== 'video'" class="grid grid-cols-4 gap-4">
+        @for(image of images() | appFilter: searchText; track image;) {
+          <div class="col-item">
+              <img [src]="image" (click)="selectImage(image)">
+          </div>
+        }
+      </div>
+      <div *ngIf="type == 'video'" class="grid grid-cols-4 gap-4">
+        @for(image of images() | appFilter: searchText; track image;) {
+        <div class="col-item">
             <video (click)="selectImage(image)" muted id="myVideo">
                 <source [src]="image + '#t=0.1'"  type="video/mp4">
             </video>
-        </li>
-      </ul>
+        </div>
+      }
+      </div>
     </div>
   </div>

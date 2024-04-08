@@ -1,43 +1,162 @@
-<div class="screen-component grid grid-rows-12 grid-cols-1" [style.background-image]="'url(' + screenSignal!().background + ')'" [style.color]="screenSignal!().color">
+@if(!fullScreen && enableFullScreen) {
+    <div class="fullscreen cursor-pointer" (click)="openFullScreen()">
+        <mat-icon aria-hidden="false" fontIcon="fullscreen"></mat-icon>
+    </div>
+}
+<div [class]="!enableFullScreen?' preview screen-component grid grid-rows-12 grid-cols-1' : 'screen-component grid grid-rows-12 grid-cols-1'" [style.background-image]="'url(' + screenSignal!().background + ')'" [style.color]="screenSignal!().color">
     <div class="header row-span-2">
         <div> {{screenSignal!().title}} </div>
     </div>
-    <div class="scorer row-span-8">
+    <div class="scorer row-span-8 relative">
         <div class="video" *ngIf="showVideo">
-            <video autoplay muted (ended)="endVideo()" id="myVideo">
+            <video autoplay muted (ended)="endVideo()" id="myVideo" class="h-full w-full">
                 <source [src]="screenSignal!().video"  type="video/mp4">
             </video>
         </div>
-        <div class="grid grid-flow-col grid-rows-2 grid-cols-12">
-            <div class="col-span-5">
-                Jugador1
+        <div *ngIf="screenSignal!().showPresentation" class="grid grid-cols-12 presentation" style="height: inherit;">
+            <div class="col-span-5 presentation-player">
+                <img *ngIf="matchSignal!().player1.image !== ''" [src]="matchSignal!().player1.image">
+                <div class="player-name">
+                    <div class="name">
+                        {{matchSignal!().player1.name}}
+                    </div>
+                    <div class="subname">
+                        {{matchSignal!().player1.subname}}
+                    </div>
+                 </div>
+                 <div class="info">
+                    {{matchSignal!().player1.info}}
+                 </div>
             </div>
-            <div class="col-span-5">
-                Jugador 2
-            </div>
-            <ng-container *ngFor="let set of matchSignal!().sets">
+            <div class="col-span-2 presentation-center flex items-center flex-col">
                 <div>
-                    {{set.games1}}
+                    VS
                 </div>
-                <div>
-                    {{set.games2}}
+                <div class="round">
+                    {{matchSignal!().round}}
+                </div>
+            </div>
+            <div class="col-span-5 presentation-player">
+                <img *ngIf="matchSignal!().player2.image !== ''" [src]="matchSignal!().player2.image">
+                <div class="player-name">
+                    <div class="name">
+                        {{matchSignal!().player2.name}}
+                    </div>
+                    <div class="subname">
+                        {{matchSignal!().player2.subname}}
+                    </div>
+                 </div>
+                 <div class="info">
+                    {{matchSignal!().player2.info}}
+                 </div>
+            </div>
+        </div>
+        <div *ngIf="screenSignal!().showMessage && screenSignal!().messageFullScreen" class="message-full-screen">
+            {{screenSignal!().message}}
+        </div>
+        <div *ngIf="!showVideo && !screenSignal!().showPresentation && !(screenSignal!().showMessage && screenSignal!().messageFullScreen)" class="score grid grid-cols-12 h-full items-center">
+            <div class="col-span-4 h-full player-info items-center col-start-1">
+                <div class="h-2/4 flex items-center">
+                    <img *ngIf="matchSignal!().player1.image !== ''" [src]="matchSignal!().player1.image">
+                     <div class="player-name">
+                        <img *ngIf="matchSignal!().serve" class="serve" src="../../assets/img/tennis_ball.png">
+                        <div class="name">
+                            {{matchSignal!().player1.name}}
+                        </div>
+                        <div class="subname">
+                            {{matchSignal!().player1.subname}}
+                        </div>
+                     </div>
+                </div>        
+                <div class="h-2/4 flex items-center">
+                    <img *ngIf="matchSignal!().player2.image !== ''"[src]="matchSignal!().player2.image">
+                    <div class="player-name">
+                        <img *ngIf="!matchSignal!().serve" class="serve" src="../../assets/img/tennis_ball.png">
+                        <div class="name">
+                            {{matchSignal!().player2.name}}
+                        </div>
+                        <div class="subname">
+                            {{matchSignal!().player2.subname}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="matchSignal!().totalSets">
+                <div class="h-full col-end-auto">
+                    <div  class="relative h-2/4 flex items-center justify-center">
+                        <div class="colum-label">Sets</div>
+                        {{calcWinSets(1)}}
+                    </div>
+                    <div class="h-2/4 flex items-center">
+                        {{calcWinSets(2)}}
+                    </div>
                 </div>
             </ng-container>
-            <div>
-                {{matchSignal!().points1}}
-            </div>
-            <div>
-                {{matchSignal!().points2}}
+            <ng-container *ngFor="let set of matchSignal!().sets; let i = index">
+                <div class="h-full" [style]="'grid-column-end:' + + (13 - (matchSignal!().sets.length - i))">
+                    <div [class]="set.won === 1? 'relative h-2/4 set-win flex items-center justify-center':'relative h-2/4 flex items-center justify-center'" >
+                        <div class="colum-label">Set {{i + 1}}</div>
+                        {{set.games1}}
+                    </div>
+                    <div [class]="set.won === 2? 'set-win h-2/4 flex items-center justify-center':'h-2/4 flex items-center justify-center'">
+                        {{set.games2}}
+                    </div>
+                </div>
+            </ng-container>
+            <div class="h-full col-end-13">
+                <div class="relative points h-2/4" >
+                    <div class="colum-label">{{superTiebreak?'Supertiebreak' : 'Puntos'}}</div>
+                    <div>
+                        {{matchSignal!().points1}}
+                    </div>
+                        
+                </div>
+                <div class="points h-2/4">
+                    <div>
+                        {{matchSignal!().points2}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="footer row-span-2">
-        <div class="sliders" *ngIf="screenSignal && screenSignal().bottomBanner.length > 0">
-           s @for (banner of screenSignal().bottomBanner; track banner) {
-                <div class="slider" *ngIf="current == i">
-                    <img class="img footer-img" [src]="banner">
-                </div>
-            }
+    <div class="footer row-span-2 flex justify-around">
+        <div *ngIf="!screenSignal!().showPresentation" class="time">
+            <div class="time-title">
+                Hora:
+            </div>
+            <div class="time-number">
+                {{now | date:"HH:mm"}}
+            </div>
         </div>
+        @if(screenSignal && screenSignal().bottomBanner.length > 0 && !screenSignal().showMessage && screenSignal().showBanner) {
+            <div class="sliders">
+               @for (banner of screenSignal().bottomBanner; track banner; let i = $index) {
+                    <div class="slider" *ngIf="current == i">
+                        <img class="img footer-img" [src]="banner">
+                    </div>
+                }
+            </div>
+        }
+        @if(screenSignal && screenSignal().showMessage && !screenSignal().messageFullScreen) {
+            <div class="message">
+                {{screenSignal().message}}
+            </div>
+        }
+        <div *ngIf="showServeTime" class="serve-time time">
+            <div class="time-title">
+                Servicio:
+            </div>
+            <div class="time-number text-center">
+                {{serveTime}}
+            </div>
+        </div>
+        <div *ngIf="!screenSignal!().showPresentation" class="time">
+            <div class="time-title">
+                Tiempo de partido:
+            </div>
+            <div class="time-number">
+                {{calcTime()}}
+            </div>
+         </div>
     </div>
 </div>

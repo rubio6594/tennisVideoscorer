@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from '../pipes/filter.pipe';
 import { ScreenService } from '../services/screen.service';
+import { MatchService } from '../services/match.service';
 
 @Component({
   selector: 'app-image-picker',
@@ -15,9 +16,10 @@ export class ImagePickerComponent implements OnInit{
 
   @Input() type: string = "";
   @Output() selectedImage = new EventEmitter<string>();
+  @Output() close =  new EventEmitter<string>();
   searchText: string = '';
   images: Signal<string[]> = signal([]);
-  constructor(private screenService: ScreenService) {}
+  constructor(private screenService: ScreenService, private matchService: MatchService) {}
 
  ngOnInit(): void {
   switch(this.type) {
@@ -27,6 +29,8 @@ export class ImagePickerComponent implements OnInit{
     case "video":
       this.images = this.screenService.videos;
       break;
+    case "player":
+      this.images = this.matchService.playersImg;
   }
  } 
   
@@ -34,6 +38,8 @@ export class ImagePickerComponent implements OnInit{
     this.selectedImage.emit(image);
   }
 
-
+  onClose() {
+    this.close.emit();
+  }
 
 }

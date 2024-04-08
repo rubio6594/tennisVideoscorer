@@ -1,22 +1,97 @@
-<div class="grid">
-    <div class="grid grid-cols-2">
-        <div class="col-span-8">
-            <div>Foto</div>
-            <div>Nombre</div>
+<div class="console-player">
+    <div class="grid grid-cols-12">
+        <div class="col-span-10 grid grid-cols-6 items-center">
+            <div class="col-span-1" (click)="openPlayerImagePicker()">
+                <img [src]="match()[myPlayer].image">
+                <div *ngIf="match()[myPlayer].image === ''">
+                    <mat-icon aria-hidden="false" fontIcon="folder"></mat-icon>
+                </div>
+            </div>
+            <div class="col-span-4">
+                <mat-form-field class="w-full">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" [value]="match()[myPlayer].name" (change)="changePlayerName($event)">
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <mat-label>Apellido</mat-label>
+                    <input matInput type="text" [value]="match()[myPlayer].subname" (change)="changePlayerSubName($event)">
+                </mat-form-field> 
+                <mat-form-field class="">
+                    <mat-label>Info</mat-label>
+                    <input matInput type="text" [value]="match()[myPlayer].info" (change)="changePlayerInfo($event)">
+                </mat-form-field> 
+            </div>
+            <div class="col-span-1 ml-6">
+                <div (click)="openPlayerPicker()">
+                    <mat-icon aria-hidden="false" fontIcon="folder"></mat-icon>
+                </div>
+                <div (click)="savePlayer()">
+                    <mat-icon aria-hidden="false" fontIcon="save"></mat-icon>
+                </div>
+            </div>
         </div>
-        <div class="col-span-4">
+        <!--<div class="col-span-2">
             <div>Cargar</div>
             <div>Guardar</div>
-        </div>
+        </div>-->
     </div>
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-12">
         <div class="col-span-6">
-            <div>Saque</div>
-            <div>Juegos</div>
+            <div class="title w-3/5">
+                Puntos
+            </div>
+            <div class="grid grid-cols-3 w-full">
+                <div class="button rest" (click)="restPoint()" [style]="match()[myPoints] == 0?'opacity:0.5':''">
+                    -
+                </div>
+                <div class="data">
+                    {{match()[myPoints]}}
+                </div>
+                <div class="button add" (click)="addPoint()">
+                    +
+                </div>
+            </div>
         </div>
-        <div class="col-span-6">
-            <div>Puntos</div>
-            <div>Sets</div>
+        <div class="col-span-6 ml-6">
+            <div class="title">
+                Saque
+            </div>
+            <div class="">
+                <img class="serve" [style]="(match().serve && myPlayerNumber === 2) || (!match().serve && myPlayerNumber === 1)?'opacity:0.3':''" (click)="changeServe()" src="../../assets/img/tennis_ball.png">
+            </div>
+        </div>
+        <div class="col-span-12  mt-8">
+            <div class="title">
+                Sets
+            </div>
+            <div class="grid grid-cols-2 text-center">
+                @for(set of match().sets; track set; let i = $index) {
+                    <div class="col-span-1 mb-4">
+                        <div class="mb-1 relative">
+                            Set {{i + 1}} <mat-icon *ngIf="match().sets.length > 1" (click)="removeSet(i)" class="absolute" style="font-size: 20px;" aria-hidden="false" fontIcon="close"></mat-icon>
+                        </div>
+                        <div class="grid grid-cols-3">
+                            <div class="button rest" (click)="restGame(i)" [style]="set[myGames] == 0?'opacity:0.5':''">
+                                -
+                            </div>
+                            <div class="data">
+                                {{set[myGames]}}
+                            </div>
+                            <div class="button add" (click)="addGame(i)" [style]="set.won == myPlayerNumber?'opacity:0.5':''">
+                                +
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div>
+
+<ng-container *ngIf="showImagePicker">
+    <app-image-picker (selectedImage)="selectPlayerImage($event)" (close)="closeImagePicker()" [type]="'player'"></app-image-picker>
+</ng-container>
+
+<ng-container *ngIf="showPlayerPicker">
+    <app-player-picker (selectedPlayer)="selectPlayer($event)" (close)="closePlayerPicker()"></app-player-picker>
+</ng-container>

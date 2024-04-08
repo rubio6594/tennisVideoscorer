@@ -1,6 +1,6 @@
 import { ScreenService } from './screen.service';
 import { Injectable } from '@angular/core';
-import { Match } from '../models/match';
+import { Match, Player } from '../models/match';
 import { Screen } from '../models/screen';
 import { MatchService } from './match.service';
 
@@ -34,9 +34,12 @@ export class LocalStorageUpdateService {
     localStorage.setItem("update", "background");
   }
 
-  updatePlayers() {
-    localStorage.setItem("update", "player");
+  updatePlayersImg() {
+    localStorage.setItem("update", "playerImg");
   }
 
+  savePlayers(players: Player[]) {
+    localStorage.setItem("players", JSON.stringify(players));
+  }
 
 }

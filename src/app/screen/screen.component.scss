@@ -4,22 +4,71 @@
     align-items: center;
     height: 100%;
     background-size: cover;
+    font-size: 6vh;
+    font-weight: 500;
+
+    .presentation {
+        .player-name {
+            height: auto;
+        }
+
+        .name {
+            line-height: 3vh;
+            font-size: 3vh;
+        }
+
+        .subname {
+            font-size: 6vh;
+            line-height: 6vh;
+        }
+
+        .info {
+            font-size: 4vh;
+            line-height: 4vh;
+            margin-top: 2vh;
+        }
+
+        .round {
+            position: absolute;
+            bottom: 2vh;
+            box-shadow: 0 0 38px 7px #00000080;
+            padding: 50px;
+            border-radius: 30px;
+            background: #121333cc;
+            margin: auto;
+        }
+    }
 
     .header,.footer {
+        height: 20vh;
         text-align: center;
         padding: 50px;
         width: 100%;
+        margin: auto;
     }
 
     .scorer {
+        height: 60vh;
         width: 100%;
         .grid {
             justify-items: center;
         }
     }
 
+    .header {
+        div {
+            box-shadow: 0 0 38px 7px #00000080;
+            padding: 50px;
+            border-radius: 30px;
+            background: #121333cc;
+            width: 70%;
+            margin: auto;
+            margin-top: -4vh;
+        }
+    }
+
     .footer {
-        height: 100%;
+        height: 16.7vh;
         padding: 0;
         
         .footer-img {
@@ -30,10 +79,225 @@
 
         .sliders {
             height: 100%;
+            max-width: 35vw;
         }
 
         .slider {
             height: 100%;
+        }
+    }
+
+    .player-info {
+        width: 100%;
+        img {
+            width: 20%;
+            margin-right: 10px;
+        }
+
+        div {
+            width: 80%;
+            font-size: 4vh;
+            position: relative;
+        }
+
+        .subname {
+            font-size: 5vh;
+            font-weight: 500;
+            margin-left: 3vw;
+        }
+
+        .name {
+            margin-bottom: -6vh;
+            font-weight: 500;
+            margin-left: 3vw;
+        }
+    }
+
+    .player-name {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        margin-left: 2vw;
+    }
+
+    .message-full-screen {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .score {
+        box-shadow: 0px 0px 38px 7px rgba(0,0,0,0.5);
+        margin: 0 5vw;
+        border-radius: 30px;
+        background: #121333cc;
+        font-size: 15vh;
+        font-weight: 300;
+        padding: 5vh 2vw;
+        margin-top: -4vh;
+        color: white;
+    }
+
+    .set-win {
+        font-weight: 500;
+        color: rgb(255, 217, 46);
+    }
+
+    .colum-label {
+        font-size: 3vh;
+        position: absolute;
+        top: 2vh;
+        width: 100%;
+        text-align: center;
+        font-weight: 300;
+        color: white;
+    }
+
+    .serve {
+        position: absolute;
+        object-fit: contain;
+        left: 0;
+        width: 8% !important;    
+    }
+
+    .points {
+        font-size: 14vh;
+        width: 100%;
+        text-align: center;
+        background: #ffff0052;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 8vw;
+    }
+
+    .video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        top:0;
+        left: 0;
+        margin-top: -4vh;
+    }
+
+    .presentation-player {
+        height: inherit;
+
+        img {
+            height: 70%; 
+            margin-bottom: 30px;
+        }
+    }
+
+    .presentation-center {
+        height: 5%;
+        margin: auto;
+    }
+
+    .time {
+        text-align: left;
+        .time-title {
+            line-height: 2vh;
+            font-size: 3vh;
+        }
+
+        .time-number {
+            line-height: 8vh;
+        }
+    }
+}
+
+.fullscreen {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+.screen-component.grid.preview{
+    font-size: 200%;
+    font-weight: 500;
+
+    .header,.footer {
+        height: 100%;
+        padding: 50px;
+
+    }
+
+    .scorer {
+        height: 66%;
+    }
+
+    .footer {
+        height: 100%;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .player-info {
+        img {
+            width: 20%;
+            margin-right: 10px;
+        }
+
+        div {
+            width: 80%;
+            font-size: 70%;
+        }
+
+        .name {
+            margin-bottom: -40%;
+        }
+    }
+
+    .score {
+        margin: 0 10%;
+        font-size: 150%;
+        font-weight: 500;
+        padding: 0 5%;
+        margin-top: 0;
+    }
+
+    .colum-label {
+        font-size: 22%;
+        top: 15%;
+    }
+
+    .points {
+        margin-left: 10px;
+        font-size: 110%;
+        min-width: 0vw;
+
+        .colum-label{
+            font-size: 17%;
+        }
+    }
+
+    .presentation-player {
+        height: inherit;
+
+        img {
+            height: 35%; 
+            margin-bottom: 30px;
+        }
+    }
+
+    .presentation-center {
+        height: 70%;
+        margin: auto;
+    }
+
+    .time {
+        text-align: left;
+        .time-title {
+            line-height: 65%;
+            font-size: 65%;
+        }
+
+        .time-number {
+            line-height: 100%;
         }
     }
 }

@@ -1,41 +1,102 @@
-<div class="settings grid grid-rows-4 grid-cols-1">
-    <div class="row-span-1">
+<div class="settings">
+    <div class="">
         <div style="height: fit-content; overflow: hidden;">
-            <app-screen></app-screen>
+            <app-screen style="height: 500px; display: block; width:50%; margin: auto;" [enableFullScreen]="false"></app-screen>
         </div>
     </div>
-    <div class="row-span-3">
-        <div class="title-input">
-            <mat-form-field class="">
-                <mat-label>Titulo</mat-label>
-                <input matInput [(ngModel)]='screen!.title' [value]="screen!.title">
-            </mat-form-field>  
-        </div>
-        <div class="color-input">
-            <mat-form-field class="">
-                <mat-label>Color</mat-label>
-                <input matInput [(ngModel)]='screen!.color' [value]="screen!.color" type="color">
-            </mat-form-field>  
-        </div>
-        <div (click)="openBackgroundPicker()">
-            Select Background
-        </div>
-        <div (click)="updateBanners()">
-            Select Banner
-        </div>
-        <div (click)="openVideoPicker()">
-            Select Video
-        </div>
-        <div class="save" (click)="saveScreen()">
-            Save
-        </div>
-    </div>
-</div>
+    <div class="mt-10">
+        <div class="grid grid-cols-4 gap-8">
+            <div>
+                <div class="title-input">
+                    <mat-form-field class="">
+                        <mat-label>Titulo</mat-label>
+                        <input matInput [(ngModel)]='screen!.title' [value]="screen!.title">
+                    </mat-form-field>  
+                </div>      
+                <div class="color-input">
+                    <mat-form-field class="">
+                        <mat-label>Color</mat-label>
+                        <input matInput [(ngModel)]='screen!.color' [value]="screen!.color" type="color">
+                    </mat-form-field>  
+                </div>
+                <div>
+                    <mat-form-field class="">
+                        <mat-label>Tiempo entre banner</mat-label>
+                        <input matInput [(ngModel)]='screen!.bannerTime' [value]="screen!.bannerTime" type="number">
+                    </mat-form-field> 
 
+                </div>
+                <div class="save" (click)="saveScreen()">
+                    Actualizar
+                </div>
+            </div>
+            <div>
+                <div class="button" (click)="openBackgroundPicker()">
+                    Seleccionar Fondo
+                </div>
+                <img class="h-3/5" [src]="screen?.background">
+            </div>
+            <div>
+                <div class="flex">
+                    <div class="button" (click)="openVideoPicker()">
+                        Seleccionar Video
+                    </div>
+                </div>
+                @if(video !== "") {
+                    <video #media
+                        class="h-3/5"
+                        [src]="video"
+                        id="singleVideo"
+                        preload="auto"
+                        crossorigin>
+                    </video>
+                    <div class="flex mt-4">
+                        <div class="button mr-8" style="width: 33%;" (click)="playVideo()">
+                            Reproducir Video
+                        </div>
+                        <div class="button" style="width: 33%;" (click)="stopVideo()">
+                            Parar Video
+                        </div>
+                    </div>
+                }
+            </div>
+            <div>
+                <div>
+                    <div class="button" (click)="updateBanners()">
+                        Mostrar Banners
+                    </div>
+                </div>
+                <div>
+                    <div class="button" (click)="quitBanners()">
+                        Quitar Banners
+                    </div>
+                </div>
+                <div>
+                    <mat-form-field class="">
+                        <mat-label>Mensaje</mat-label>
+                        <textarea matInput
+                            [(ngModel)]="screen!.message"
+                            cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize"
+                            cdkAutosizeMinRows="2"
+                            cdkAutosizeMaxRows="5">
+                        </textarea>
+                    </mat-form-field> 
+                    <div class="button" (click)="toggleMessage()">
+                        Mostrar/Ocultar mensaje
+                    </div>
+                    <div class="button" (click)="toggleMessageFullScreen()">
+                        Pantalla completa
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
 <ng-container *ngIf="showBackgroundPicker">
-    <app-image-picker (selectedImage)="selectBackground($event)" [type]="'background'"></app-image-picker>
+    <app-image-picker (selectedImage)="selectBackground($event)" (close)="closeImagePicker()" [type]="'background'"></app-image-picker>
 </ng-container>
 
 <ng-container *ngIf="showVideoPicker">
-    <app-image-picker (selectedImage)="selectVideo($event)" [type]="'video'"></app-image-picker>
+    <app-image-picker (selectedImage)="selectVideo($event)" (close)="closeImagePicker()" [type]="'video'"></app-image-picker>
 </ng-container>

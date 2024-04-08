@@ -14,7 +14,11 @@ export class ScreenService {
     bottomBanner: [],
     message: "",
     bannerTime: 5000,
-    color: "black"
+    color: "white",
+    showPresentation: false,
+    showMessage: false,
+    messageFullScreen: false,
+    showBanner: false
   });
 
   videos: WritableSignal<string[]> = signal([]);
@@ -64,7 +68,6 @@ export class ScreenService {
   updateBanners() {
     this.screen.update(screen =>{
       screen.bottomBanner = (JSON.parse(localStorage.getItem("bannerFiles")!));
-      this.localStorageUpdateService.updateScreen(screen);
       return screen
     })
   }
@@ -81,4 +84,43 @@ export class ScreenService {
     })
   }
 
+  quitBanners() {
+    this.screen.update(screen => {
+      screen.showBanner = false;
+      this.localStorageUpdateService.updateScreen(screen);
+      return screen;
+    })
+  }
+
+  showBanners() {
+    this.screen.update(screen => {
+      screen.showBanner = true;
+      this.localStorageUpdateService.updateScreen(screen);
+      return screen;
+    })
+  }
+
+  togglePresentation() {
+    this.screen.update(screen => {
+      screen.showPresentation = !screen.showPresentation;
+      this.localStorageUpdateService.updateScreen(screen);
+      return screen;
+    })
+  }
+
+  toggleMessage() {
+    this.screen.update(screen => {
+      screen.showMessage = !screen.showMessage;
+      this.localStorageUpdateService.updateScreen(screen);
+      return screen;
+    })
+  }
+
+  toggleMessageFullScreen() {
+    this.screen.update(screen => {
+      screen.messageFullScreen = !screen.messageFullScreen;
+      this.localStorageUpdateService.updateScreen(screen);
+      return screen;
+    })
+  }
 }

@@ -1,0 +1,25 @@
+.image-picker {
+    position: absolute;
+    top: 20%;
+    background: #e6e1e1;
+    z-index: 1;
+    width: 60%;
+    left: 20%;
+    height: 60%;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 38px 7px rgba(0, 0, 0, 0.5);
+}
+.col-item {
+    height: 150px;
+
+    img {
+        height: 100%;
+    }
+}
+
+.button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px solid;
+}

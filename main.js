@@ -11,12 +11,12 @@ const videoPath = path.join(__dirname, '/Videos');
 const backgroundsPath = path.join(__dirname, '/Fondos');
 const bannersPath = path.join(__dirname, '/Banners');
 const playersPath = path.join(__dirname, '/Jugadores');
-
+var readInterval;
 
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
-  setInterval(async () => {
+  readInterval = setInterval(async () => {
     var update = await localStorage.getItem("update");
     if(update) {
       switch(update) {
@@ -39,11 +39,11 @@ const args = process.argv.slice(1),
           });
           localStorage.setItem("update", "bannersUpdated");
           break;
-        case "player":
+        case "playerImg":
           fs.readdir(playersPath, (err, files) => {
-            localStorage.setItem("playerFiles", JSON.stringify(files.map(file => path.join(__dirname, '/Jugadores/' + file).replaceAll("\\", "\/"))));
+            localStorage.setItem("playerImgFiles", JSON.stringify(files.map(file => path.join(__dirname, '/Jugadores/' + file).replaceAll("\\", "\/"))));
           });
-          localStorage.setItem("update", "playersUpdated");
+          localStorage.setItem("update", "playersImgUpdated");
           break;
       }
     }
@@ -108,7 +108,8 @@ app.on('ready', createWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-
+  clearInterval(readInterval);
+  app.quit()
   // On macOS specific close process
   if (process.platform !== 'darwin') {
     app.quit()
